@@ -1,30 +1,14 @@
-name: Python CI/CD
+from flask import Flask
 
-on:
-  push:
-    branches:
-      - main
+app = Flask(__name__)
 
-jobs:
-  build:
-    runs-on: ubuntu-latest
+@app.route('/')
+def hello():
+    return 'Hello, World! I am blue'
 
-    steps:
-    - name: Checkout code
-      uses: actions/checkout@v2
+@app.route('/about')
+def about():
+    return 'This is blue Environment.'
 
-    - name: Set up Python
-      uses: actions/setup-python@v2
-      with:
-        python-version: 3.8
-
-    - name: Install dependencies
-      run: |
-        pip install -r requirements.txt
-      working-directory: ./app
-
-    - name: Run the Python script
-      run: |
-        python main.py
-      working-directory: ./app
-
+if __name__ == '__main__':
+    app.run(debug=True, host='0.0.0.0')
